@@ -1809,6 +1809,8 @@ NSString* const kYWAPressureTrendRising = @"1";
              if (result == nil) {
                  NSLog(@"here we go with this shit agaib....");
              }
+             
+             
             BOOL badResponse = /*[[[[[result objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"] objectForKey:@"description"] caseInsensitiveCompare:kYWAYahooWeatherErrorReturn] == NSOrderedSame;*/ NO;
                  
                  if (badResponse) {
@@ -1817,7 +1819,7 @@ NSString* const kYWAPressureTrendRising = @"1";
                  }
                  
                  // cache the result, pass result to the callback
-                 if (_cacheEnabled) { [self cacheResult:newResult WOEID:woeid]; }
+                 if (_cacheEnabled) { [self cacheResult:result WOEID:woeid]; }
                  success([[[result objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"]);
              
          }
