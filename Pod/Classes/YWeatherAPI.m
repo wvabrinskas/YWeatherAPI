@@ -1806,7 +1806,7 @@ NSString* const kYWAPressureTrendRising = @"1";
                                           success:^(NSURLSessionDataTask *task, id newResult)
          {
              // received a response, but Yahoo did not find any useful information for us
-                 BOOL badResponse = [[[[[newResult objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"] objectForKey:@"description"] caseInsensitiveCompare:kYWAYahooWeatherErrorReturn] == NSOrderedSame;
+            BOOL badResponse = /*[[[[[newResult objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"] objectForKey:@"description"] caseInsensitiveCompare:kYWAYahooWeatherErrorReturn] == NSOrderedSame;*/ NO;
                  
                  if (badResponse) {
                      failure((NSHTTPURLResponse*) task.response, [NSError errorWithDomain:kYWAErrorDomain code:kYWAEmptyResponse userInfo:nil]);
