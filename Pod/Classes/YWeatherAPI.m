@@ -1815,7 +1815,7 @@ NSString* const kYWAPressureTrendRising = @"1";
                  }
                  
                  // cache the result, pass result to the callback
-                 if (_cacheEnabled) { [self cacheResult:result WOEID:woeid]; }
+                 if (_cacheEnabled) { [self cacheResult:newResult WOEID:woeid]; }
                  success([[[newResult objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"]);
              }
          }
