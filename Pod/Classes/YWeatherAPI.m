@@ -1803,7 +1803,7 @@ NSString* const kYWAPressureTrendRising = @"1";
         success([[[result objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"]);
     } failure:^(NSError *error) { // cache failed
         [[YWeatherAPIHTTPClient sharedClient] GET:encodedPath parameters:nil
-                                          success:^(NSURLSessionDataTask *task, id result)
+                                          success:^(NSURLSessionDataTask *task, NSDictionary* result)
          {
              // received a response, but Yahoo did not find any useful information for us
              if (result == nil) {
