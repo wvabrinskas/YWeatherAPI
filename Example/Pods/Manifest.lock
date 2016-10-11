@@ -22,7 +22,7 @@ PODS:
     - AFNetworking/NSURLSession
   - Expecta (1.0.5)
   - Specta (1.0.5)
-  - YWeatherAPI (1.0.6):
+  - YWeatherAPI (1.0.7):
     - AFNetworking (~> 2.0)
 
 DEPENDENCIES:
@@ -38,8 +38,8 @@ SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
-  YWeatherAPI: 56844e65e38b4f355fd1552bd71ebe58d5097aa6
+  YWeatherAPI: dac8f21686655176e2dfbc2a0087154e67ae136e
 
 PODFILE CHECKSUM: 9e436f761a91d1429100ec692f494b741b17b29d
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.0.1
