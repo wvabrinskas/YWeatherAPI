@@ -1803,12 +1803,11 @@ NSString* const kYWAPressureTrendRising = @"1";
         success([[[result objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"]);
     } failure:^(NSError *error) { // cache failed
         [[YWeatherAPIHTTPClient sharedClient] GET:encodedPath parameters:nil
-                                          success:^(NSURLSessionDataTask *task, id result)
+                                          success:^(NSURLSessionDataTask *task, id newResult)
          {
              // received a response, but Yahoo did not find any useful information for us
-             if (result != nil) {
-                 NSLog(@"result : %@",result);
-                 BOOL badResponse = [[[[[result objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"] objectForKey:@"description"] caseInsensitiveCompare:kYWAYahooWeatherErrorReturn] == NSOrderedSame;
+             if (newResult != nil) {
+                 BOOL badResponse = [[[[[newResult objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"] objectForKey:@"description"] caseInsensitiveCompare:kYWAYahooWeatherErrorReturn] == NSOrderedSame;
                  
                  if (badResponse) {
                      failure((NSHTTPURLResponse*) task.response, [NSError errorWithDomain:kYWAErrorDomain code:kYWAEmptyResponse userInfo:nil]);
@@ -1817,7 +1816,7 @@ NSString* const kYWAPressureTrendRising = @"1";
                  
                  // cache the result, pass result to the callback
                  if (_cacheEnabled) { [self cacheResult:result WOEID:woeid]; }
-                 success([[[result objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"]);
+                 success([[[newResult objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"]);
              }
          }
                                           failure:^(NSURLSessionDataTask *task, NSError *error)
