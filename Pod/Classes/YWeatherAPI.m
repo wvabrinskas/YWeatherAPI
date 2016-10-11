@@ -1807,6 +1807,7 @@ NSString* const kYWAPressureTrendRising = @"1";
          {
              // received a response, but Yahoo did not find any useful information for us
              if (result != nil) {
+                 NSLog(@"result : %@",result);
                  BOOL badResponse = [[[[[result objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"] objectForKey:@"description"] caseInsensitiveCompare:kYWAYahooWeatherErrorReturn] == NSOrderedSame;
                  
                  if (badResponse) {
