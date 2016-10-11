@@ -1805,13 +1805,9 @@ NSString* const kYWAPressureTrendRising = @"1";
         [[YWeatherAPIHTTPClient sharedClient] GET:encodedPath parameters:nil
                                           success:^(NSURLSessionDataTask *task, NSDictionary* result)
          {
-             // received a response, but Yahoo did not find any useful information for us
-             if (result == nil) {
-                 NSLog(@"here we go with this shit agaib....");
-             }
+             // received a response, but Yahoo did not find any useful information for u
              
-             
-            BOOL badResponse = /*[[[[[result objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"] objectForKey:@"description"] caseInsensitiveCompare:kYWAYahooWeatherErrorReturn] == NSOrderedSame;*/ NO;
+            BOOL badResponse = [[[[[result objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"] objectForKey:@"description"] caseInsensitiveCompare:kYWAYahooWeatherErrorReturn] == NSOrderedSame;
                  
                  if (badResponse) {
                      failure((NSHTTPURLResponse*) task.response, [NSError errorWithDomain:kYWAErrorDomain code:kYWAEmptyResponse userInfo:nil]);
