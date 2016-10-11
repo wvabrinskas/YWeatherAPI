@@ -1806,16 +1806,18 @@ NSString* const kYWAPressureTrendRising = @"1";
                                           success:^(NSURLSessionDataTask *task, id result)
          {
              // received a response, but Yahoo did not find any useful information for us
-             BOOL badResponse = [[[[[result objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"] objectForKey:@"description"] caseInsensitiveCompare:kYWAYahooWeatherErrorReturn] == NSOrderedSame;
-             
-             if (badResponse) {
-                 failure((NSHTTPURLResponse*) task.response, [NSError errorWithDomain:kYWAErrorDomain code:kYWAEmptyResponse userInfo:nil]);
-                 return;
+             if (result != nil) {
+                 BOOL badResponse = [[[[[result objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"] objectForKey:@"description"] caseInsensitiveCompare:kYWAYahooWeatherErrorReturn] == NSOrderedSame;
+                 
+                 if (badResponse) {
+                     failure((NSHTTPURLResponse*) task.response, [NSError errorWithDomain:kYWAErrorDomain code:kYWAEmptyResponse userInfo:nil]);
+                     return;
+                 }
+                 
+                 // cache the result, pass result to the callback
+                 if (_cacheEnabled) { [self cacheResult:result WOEID:woeid]; }
+                 success([[[result objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"]);
              }
-             
-             // cache the result, pass result to the callback
-             if (_cacheEnabled) { [self cacheResult:result WOEID:woeid]; }
-             success([[[result objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"]);
          }
                                           failure:^(NSURLSessionDataTask *task, NSError *error)
          {
