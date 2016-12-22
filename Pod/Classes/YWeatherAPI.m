@@ -1806,12 +1806,13 @@ NSString* const kYWAPressureTrendRising = @"1";
                                           success:^(NSURLSessionDataTask *task, NSDictionary* result)
          {
              // received a response, but Yahoo did not find any useful information for u
-             id query = [result objectForKey:@"query"];
-             id results = [query objectForKey:@"results"];
-             id channel = [results objectForKey:@"channel"];
-             id description = [channel objectForKey:@"description"];
-             
-            BOOL badResponse = [[[[[result objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"] objectForKey:@"description"] caseInsensitiveCompare:kYWAYahooWeatherErrorReturn] == NSOrderedSame;
+             if (result != nil) {
+                 id query = [result objectForKey:@"query"];
+                 id results = [query objectForKey:@"results"];
+                 id channel = [results objectForKey:@"channel"];
+                 id description = [channel objectForKey:@"description"];
+                 
+                 BOOL badResponse = [[[[[result objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"] objectForKey:@"description"] caseInsensitiveCompare:kYWAYahooWeatherErrorReturn] == NSOrderedSame;
                  
                  if (badResponse) {
                      failure((NSHTTPURLResponse*) task.response, [NSError errorWithDomain:kYWAErrorDomain code:kYWAEmptyResponse userInfo:nil]);
@@ -1821,14 +1822,15 @@ NSString* const kYWAPressureTrendRising = @"1";
                  // cache the result, pass result to the callback
                  if (_cacheEnabled) { [self cacheResult:result WOEID:woeid]; }
                  success([[[result objectForKey:@"query"] objectForKey:@"results"] objectForKey:@"channel"]);
+                 
+             }
              
          }
-            failure:^(NSURLSessionDataTask *task, NSError *error)
+                                          failure:^(NSURLSessionDataTask *task, NSError *error)
          {
              failure((NSHTTPURLResponse*) task.response, error);
          }];
-    }];
-    
+    }];    
 }
 
 
